@@ -1,0 +1,2 @@
+1、整合了jdbcTemplate、springMVC、druid、shiro
+2、其中shiro做了登陆校验、授权、单点登录（后登录 踢出 前登录）
