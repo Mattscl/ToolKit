@@ -68,8 +68,7 @@ function validatorInit() {
                 }
             }
         }
-    })
-        .on('success.form.bv', function(e) {
+    }).on('success.form.bv', function(e) {
             // 禁用默认表单提交
             e.preventDefault();
 
@@ -122,7 +121,7 @@ function validatorInit() {
                         bv.updateStatus(field,'INVALID','callback');
                         bv.updateStatus("checkCode",'INVALID','callback');
 
-                        $('#checkCodeImg').attr("src","account/checkCode/" + new Date().getTime());
+                        $('#checkCodeImg').attr("src",getRequestUrl() + "/login/checkCode?timestamp=" + new Date().getTime());
                         $('#checkCode').val("");
                     }else{
                         // 页面跳转

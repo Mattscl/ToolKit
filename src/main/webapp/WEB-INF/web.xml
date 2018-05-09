@@ -10,7 +10,7 @@
 
   <!--容器首次运行加载页面-->
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
 
   <!--错误400界面-->
