@@ -3,6 +3,7 @@ package com.os.login.control;
 import com.os.bean.UserInfo;
 import com.os.login.dao.LoginDao;
 import com.os.utils.CheckCodeImg;
+import com.os.utils.JsonToMap;
 import com.os.utils.SysString;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -11,8 +12,10 @@ import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import javax.annotation.Resource;
@@ -20,6 +23,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by Matt on 2018/5/8.
@@ -33,22 +37,25 @@ public class LoginControl {
     Logger log= Logger.getLogger(LoginControl.class);
     /**
      * 用户登录
-     * @param req
+     * @param request
      * @param m 传出参数
-     * @param usercode 用户代码（必须和form表单name一致）
-     * @param userpwd 用户密码（必须和form表单name一致）
      * @return
      * 这里的前台用户输入的密码会被shiro自动通过md5加密，因此无需手动对密码进行再次加密
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(HttpServletRequest req, Model m, String usercode, String userpwd)
+    @ResponseBody
+    public Object login(HttpServletRequest request, Model m, @RequestBody String data)
     {
+        HashMap<String,Object> dataMap = (HashMap<String, Object>) JsonToMap.jsonToMap(data);
         String sUrl="";
         String msg="";
+        String userCode = dataMap.get("userID").toString();
+        String userPwd = dataMap.get("password").toString();
+        HashMap<String,Object> obj = new HashMap<String, Object>();
         try
         {
-            usercode=usercode.toUpperCase();
-            UsernamePasswordToken token = new UsernamePasswordToken(usercode,userpwd);
+            userCode=userCode.toUpperCase();
+            UsernamePasswordToken token = new UsernamePasswordToken(userCode,userPwd);
             //记录该令牌
             token.setRememberMe(false);
             //subject权限对象
@@ -57,8 +64,8 @@ public class LoginControl {
             if (subject.isAuthenticated())
             {
 
-                UserInfo u=loginDao.getUser(usercode);
-                if(u==null)
+                UserInfo u=loginDao.getUser(userCode);
+                if(u == null)
                 {
                     msg = "用户代码不存在!";
                 }
@@ -74,13 +81,14 @@ public class LoginControl {
                 {
                     sUrl="index";
                     //用户信息存储在session中
-                    WebUtils.setSessionAttribute(req,"user",u);
+                    WebUtils.setSessionAttribute(request,"user",u);
                     log.info("登录验证成功！");
                 }
             }
             else
             {
                 sUrl="../login";
+                obj.put("result","error");
             }
         }
         catch (IncorrectCredentialsException e)
@@ -119,7 +127,7 @@ public class LoginControl {
             sUrl = "../login";
             m.addAttribute("msg", msg);  //将错误信息传递到前台
         }
-        return sUrl;
+        return obj;
     }
 
     @RequestMapping(value = "/loginOut",method = RequestMethod.GET)
