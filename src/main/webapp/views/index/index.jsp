@@ -49,7 +49,7 @@
     });
     function show()
     {
-        window.location = "./views/kickOut.jsp";
+        window.location = "../kickOut.jsp";
     }
 </script>
 </body>

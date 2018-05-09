@@ -82,7 +82,7 @@
         <!-- Shiro的核心安全接口,这个属性是必须的 -->
         <property name="securityManager" ref="securityManager"/>
         <!-- 要求登录时的链接(可根据项目的URL进行替换),非必须的属性,默认会自动寻找Web工程根目录下的"/login.html"页面 -->
-        <property name="loginUrl" value="/index.jsp"/>
+        <property name="loginUrl" value="/login.jsp"/>
         <!-- 登录成功后要跳转的连接 -->
         <property name="successUrl" value="/index.jsp"/>
         <!-- 用户访问未对其授权的资源时,所显示的连接 -->
@@ -103,6 +103,7 @@
                 error.jsp = anon
                 /login = anon
                 /logout = logout
+                /login/checkCode = anon  <!--验证码请求不需要权限校验-->
                 <!-- authc表示此地址需要验证后可访问 -->
                 <!--
                     此处配置除了登录等之外的地址都走kickout拦截器进行并发登录控制。

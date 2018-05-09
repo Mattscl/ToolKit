@@ -45,11 +45,11 @@ function validatorInit() {
                 validators : {
                     notEmpty : {
                         message : '用户名不能为空'
-                    },regexp: {
+                    }/*,regexp: {
                         regexp: '[0-9]+',
                         message: '只允许输入数字'
                     },
-                    callback : {}
+                    callback : {}*/
                 }
             },
             password : {
@@ -83,21 +83,21 @@ function validatorInit() {
             var checkCode = $('#checkCode').val();
 
             // 加密
-            password = infoEncrypt(userID, password, checkCode)
+            //password = infoEncrypt(userID, password, checkCode);
 
             var data = {
-                "id" : userID,
+                "userID" : userID,
                 "password" : password,
+                "checkCode" : checkCode
             }
             $.ajax({
                 type:"POST",
-                url:"account/login",
+                url:getRequestUrl() + "/login",
                 dataType:"json",
                 contentType:"application/json",
                 data:JSON.stringify(data),
                 success:function(response){
                     // 接收到后端响应
-
                     // 分析返回的 JSON 数据
                     if(response.result == 'error'){
                         var errorMessage;
@@ -124,8 +124,8 @@ function validatorInit() {
                         $('#checkCodeImg').attr("src",getRequestUrl() + "/login/checkCode?timestamp=" + new Date().getTime());
                         $('#checkCode').val("");
                     }else{
-                        // 页面跳转
-                        window.location.href = "/WMS";
+                        // 登录成功页面跳转
+                        window.location.href = getRequestUrl() + "/views/index/index.jsp";
                     }
                 },
                 error:function(data){
@@ -134,3 +134,13 @@ function validatorInit() {
             });
         });
 }
+
+function kickout()
+{
+    var href=location.href;
+    if(href.indexOf("kickout")>0)
+    {
+        alert("您的账号在另一台设备上登录，您被挤下线，若不是您本人操作，请立即修改密码！");
+    }
+}
+window.onload=kickout();  //页面加载完成之后调用判断是否被踢出的方法
