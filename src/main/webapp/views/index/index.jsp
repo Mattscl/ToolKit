@@ -1,18 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="<%=request.getContextPath() %>/static/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="<%=request.getContextPath() %>/views/index/os-frame.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="<%=request.getContextPath() %>/static/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet">
     <link href="<%=request.getContextPath() %>/views/index/index.css" rel="stylesheet">
+    <link href="<%=request.getContextPath() %>/views/index/sidebar-menu.css" rel="stylesheet">
+
+    <style type="text/css">
+        .main-sidebar{
+            position: absolute;
+            top: 50px;
+            left: 0;
+            height: 100%;
+            min-height: 100%;
+            width: 230px;
+            z-index: 810;
+            background-color: #222d32;
+        }
+        .navbar{
+
+            width: 100%;
+            height: 50px;
+            background-color: #3c8dbc;
+            border-radius: 0;
+        }
+        .navbarLeft{
+            float: left;
+            background-color: #367fa9;
+            width: 230px;
+            height: 100%;
+        }
+        .navbarLeft .logo-lg{
+            display: block;
+            color: #fff;
+            font-size: 20px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: 300;
+            font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+        }
+        .navbarLeft .logo-lg b{
+
+            font-weight: 800;
+        }
+        .navbar .navbar-custom-menu{
+            position: relative;
+            float: right;
+        }
+        .navbarRight{
+            margin-left:230px;width:100%;
+        }
+        .navbar .navbar-custom-menu .navbar-nav .right{
+            color: #fff;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            line-height: 20px;
+            display: block;
+            list-style-type: disc;
+            -webkit-margin-before: 1em;
+            -webkit-margin-after: 1em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            -webkit-padding-start: 40px;
+
+        }
+    </style>
+
 </head>
 
 <body>
+login success!
+<shiro:hasPermission name="E11:1">
+    <button id="btnEdit" class="btn btn-default" onclick="show()"><i></i> 修改
+    </button>
+</shiro:hasPermission><br/>
+Hello, <shiro:principal/>, how are you today?
+
 <!--顶栏-->
 <div class="navbar navbar-duomi navbar-static-top" role="navigation">
     <div class="container-fluid">
@@ -25,81 +98,63 @@
 <!--100%宽度，包含左侧菜单栏和右侧导航容器-->
 <div class="container-fluid">
     <div class="row">
+        <!--左侧菜单栏-->
         <div class="col-md-2">
-            <ul id="main-nav" class="main-nav nav nav-tabs nav-stacked" style="">
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-th-large"></i>
-                        首页
-                    </a>
-                </li>
-                <li>
-                    <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
-                        <i class="glyphicon glyphicon-cog"></i>
-                        系统管理
-                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
-                    </a>
-                    <ul id="systemSetting" class="nav nav-list secondmenu collapse" style="height: 0px;">
-                        <li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp;用户管理</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;菜单管理</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;角色管理</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-edit"></i>&nbsp;修改密码</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;日志查看</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#configSetting" class="nav-header collapsed" data-toggle="collapse">
-                        <i class="glyphicon glyphicon-credit-card"></i>
-                        配置管理
-                        <span class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
-                    </a>
-                    <ul id="configSetting" class="nav nav-list secondmenu collapse in">
-                        <li class="active"><a href="#"><i class="glyphicon glyphicon-globe"></i>&nbsp;全局缺省配置</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-star-empty"></i>&nbsp;未开通用户配置</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-star"></i>&nbsp;退订用户配置</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-text-width"></i>&nbsp;试用用户配置</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;开通用户配置</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="#disSetting" class="nav-header collapsed" data-toggle="collapse">
-                        <i class="glyphicon glyphicon-globe"></i>
-                        分发配置
-                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
-                    </a>
-                    <ul id="disSetting" class="nav nav-list secondmenu collapse">
-                        <li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;分发包配置</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="#dicSetting" class="nav-header collapsed" data-toggle="collapse">
-                        <i class="glyphicon glyphicon-bold"></i>
-                        字典配置
-                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
-                    </a>
-                    <ul id="dicSetting" class="nav nav-list secondmenu collapse">
-                        <li><a href="#"><i class="glyphicon glyphicon-text-width"></i>&nbsp;关键字配置</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-fire"></i>
-                        关于系统
-                        <span class="badge pull-right">1</span>
-                    </a>
-                </li>
-
-            </ul>
+            <%--<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                用户菜单
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <ul class="list-group">
+                            <a href="javascript:void(0);" data-addtab="userMenu1" url="/admin/message" class="list-group-item">用户菜单 1</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu2" url="/admin/message" class="list-group-item">用户菜单 2</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu3" url="/admin/message" class="list-group-item">用户菜单 3</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu4" url="/admin/message" class="list-group-item">用户菜单 4</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu5" url="/admin/message" class="list-group-item">用户菜单 5</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu6" url="/admin/message" class="list-group-item">用户菜单 6</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu7" url="/admin/message" class="list-group-item">用户菜单 7</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu8" url="/admin/message" class="list-group-item">用户菜单 8</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu9" url="/admin/message" class="list-group-item">用户菜单 9</a>
+                            <a href="javascript:void(0);" data-addtab="userMenu10" url="/admin/message" class="list-group-item">用户菜单 10</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>--%>
+            <section id="div_menu" class="sidebar">
+            </section>
         </div>
+        <!--右侧内容区域-->
         <div class="col-md-10">
-            这里是内容
+            <div class="main">
+                <div id="tabs">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <button type="button" class="btn btn-default" addtabs="save" id="save" url="/admin/save">
+                                <i class="glyphicon glyphicon-floppy-disk"></i>
+                                SAVE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath() %>/static/jquery/jquery-1.11.0.min.js"></script>
+<script src="<%=request.getContextPath() %>/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath() %>/views/index/sidebar-menu.js"></script>
+<script src="<%=request.getContextPath() %>/views/index/index.js"></script>
 </body>
 </html>
