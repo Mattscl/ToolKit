@@ -1,4 +1,3 @@
-
 $.fn.addtabs = function (options) {
     obj = $(this);
     Addtabs.options = $.extend({
@@ -267,4 +266,4 @@ window.Addtabs = {
             dropdown.addClass('hide');
         }
     }
-}
+};

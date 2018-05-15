@@ -101,6 +101,8 @@
                 /static/** = anon
                 login.jsp = anon
                 error.jsp = anon
+                footer.jsp = anon  <!--公共页面分离-->
+                header.jsp = anon  <!--公共页面分离-->
                 /login = anon
                 /logout = logout
                 /login/checkCode = anon  <!--验证码请求不需要权限校验-->

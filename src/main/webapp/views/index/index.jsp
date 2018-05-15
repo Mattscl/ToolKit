@@ -1,81 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
 <html>
 <head>
-    <!--[if lt IE 9]>
-    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script src="<%=request.getContextPath() %>/views/index/os-frame.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="<%=request.getContextPath() %>/static/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--header 作为公共模版分离出去-->
+    <jsp:include page="/static/commonviews/header.jsp"/>
     <link href="<%=request.getContextPath() %>/views/index/index.css" rel="stylesheet">
     <link href="<%=request.getContextPath() %>/views/index/sidebar-menu.css" rel="stylesheet">
-
-    <style type="text/css">
-        .main-sidebar{
-            position: absolute;
-            top: 50px;
-            left: 0;
-            height: 100%;
-            min-height: 100%;
-            width: 230px;
-            z-index: 810;
-            background-color: #222d32;
-        }
-        .navbar{
-
-            width: 100%;
-            height: 50px;
-            background-color: #3c8dbc;
-            border-radius: 0;
-        }
-        .navbarLeft{
-            float: left;
-            background-color: #367fa9;
-            width: 230px;
-            height: 100%;
-        }
-        .navbarLeft .logo-lg{
-            display: block;
-            color: #fff;
-            font-size: 20px;
-            line-height: 50px;
-            text-align: center;
-            font-weight: 300;
-            font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-        }
-        .navbarLeft .logo-lg b{
-
-            font-weight: 800;
-        }
-        .navbar .navbar-custom-menu{
-            position: relative;
-            float: right;
-        }
-        .navbarRight{
-            margin-left:230px;width:100%;
-        }
-        .navbar .navbar-custom-menu .navbar-nav .right{
-            color: #fff;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            line-height: 20px;
-            display: block;
-            list-style-type: disc;
-            -webkit-margin-before: 1em;
-            -webkit-margin-after: 1em;
-            -webkit-margin-start: 0px;
-            -webkit-margin-end: 0px;
-            -webkit-padding-start: 40px;
-
-        }
-    </style>
-
 </head>
 
 <body>
@@ -100,7 +32,7 @@ Hello, <shiro:principal/>, how are you today?
     <div class="row">
         <!--左侧菜单栏-->
         <div class="col-md-2">
-            <%--<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
@@ -124,7 +56,8 @@ Hello, <shiro:principal/>, how are you today?
                         </ul>
                     </div>
                 </div>
-            </div>--%>
+            </div>
+            <!--动态多层菜单容器-->
             <section id="div_menu" class="sidebar">
             </section>
         </div>
@@ -151,9 +84,9 @@ Hello, <shiro:principal/>, how are you today?
         </div>
     </div>
 </div>
-
-<script src="<%=request.getContextPath() %>/static/jquery/jquery-1.11.0.min.js"></script>
-<script src="<%=request.getContextPath() %>/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!--footer 作为公共模版分离出去-->
+<jsp:include page="/static/commonviews/footer.jsp"/>
+<script src="<%=request.getContextPath() %>/static/utils/os-frame.js"></script>
 <script src="<%=request.getContextPath() %>/views/index/sidebar-menu.js"></script>
 <script src="<%=request.getContextPath() %>/views/index/index.js"></script>
 </body>
